@@ -1,0 +1,95 @@
+{% from 'bootstrap/utils.html' import render_static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{ web_config['meta_desciption'] }}">
+    <meta name="author" content="{{ web_config['web_author'] }}">
+    <meta name="generator" content="Hugo 0.80.0">
+    <meta name="theme-color" content="#563d7c">
+    {% block styles %}
+       <!-- Bootstrap CSS -->
+       {{ bootstrap.load_css() }}
+       {{ render_static('css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css', local=False) }}
+       {{ render_static('css', 'https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css', local=False) }}
+       {{ render_static('css', 'custom.css') }}
+    {% endblock %}
+    <title>{{title}}</title>
+
+    {% endblock %}
+  </head>
+  <body>
+    
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="{{ url_for('cluster.index') }}">{{ web_config['brand'] }}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    {% set navigation_bar = [
+      ('/', 'dashboard', 'Dashboard'),
+      ('/cluster/index', 'cluster_all', 'Clusters List')
+    ]-%}
+    {% set active_page = active_page|default('dashboard') -%}
+    
+    <ul class="navbar-nav mr-auto">
+    {% for href, id, label in navigation_bar %}
+      <li class="nav-item {% if id == active_page %} active {% endif %}">
+        <a class="nav-link" href="{{ href }}">{{ label }} <span class="sr-only">(current)</span></a>
+      </li>
+    {% endfor %}
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/Jaironlanda/C19-cluster-MY">Soruce Code (GitHub)<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://jaironlanda.com/blog/author/jaironlanda">About Me<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+
+    <form class="form-inline mt-2 mt-md-0" method="POST" action="{{ url_for('cluster.search_cluster') }}">
+      <!-- <input class="form-control mr-sm-2" type="text" placeholder="Cluster name, state, or district" aria-label="Search"> -->
+      {{ form.csrf_token() }}
+      {{ form.search_cluster }}
+      <button type="submit" class="btn btn-primary my-2 my-sm-0">Search</button>
+    </form>
+  </div>
+</nav>
+
+<main role="main" class="container">
+  <div class="alert alert-dismissible alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Note</strong><br>
+      Dataset update frequency 2359 / 12:59 PM daily. Dataset is provided by the Ministry of Health Malaysia. (<a href="https://github.com/MoH-Malaysia/covid19-public/tree/main/epidemic#cluster-analysis" class="alert-link">GitHub</a>)
+  </div>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1>{{ page_name }}</h1>
+    <div class="mr-2 text-muted">
+      <h5>Last Update: {{ lastupdate|datetimeformat('%d-%m-%Y') }}</h5>
+    </div>
+    
+  </div>
+  {% block content %}{% endblock %}
+
+  <footer class="footer mt-auto py-2">
+    <div class="container">
+      <span class="text-muted">
+        Develop by <a href="https://jaironlanda.com/blog/author/jaironlanda">jaironlanda.com</a> 
+        | Data From: <a href="https://github.com/MoH-Malaysia/covid19-public">Ministry of Health Malaysia (Open Data) </a>
+      </span>
+    </div>
+  </footer>
+</main>
+
+{% block scripts %}
+  <!-- Optional JavaScript -->
+  {{ bootstrap.load_js() }}
+  {{ render_static('js', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js', local=False)}}
+  {{ render_static('js', 'https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js', local=False)}}
+  {{ render_static('js', 'https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js', local=False)}}
+  {% block jquery %}{% endblock %}
+{% endblock %}
+      
+  </body>
+</html>

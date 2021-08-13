@@ -1,0 +1,163 @@
+
+{% extends 'base.html' %}
+{% set active_page = "dashboard" %}
+{% block content %}
+
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Total Cluster(s)</h2>
+            <p class="card-text h3">{{ total['total_cluster'] }}</p>
+          </div>
+          <div class="card-footer">
+            <div class="float-right">
+              <a class="btn btn-primary" href="{{ url_for('cluster.cluster_index') }}" role="button">Cluster(s) List</a>
+            </div>
+            
+          </div>
+        </div>
+        <div class="card text-white bg-danger mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Active Cluster(s)</h2>
+            <p class="card-text h3">{{ total['total_active'] }}</p>
+          </div>
+        </div>
+        <div class="card text-white bg-info mb-3">
+          <div class="card-body">
+            <b class="card-title">Total Cluster(s) by Category(s) | {{ total['total_cat_count'] }}</b>
+            <p class="card-text">
+              Workplace: {{ total['total_cluster_by_cat']['workplace'] }} <br>
+              Community : {{ total['total_cluster_by_cat']['community'] }} <br>
+              Education: {{ total['total_cluster_by_cat']['education'] }} <br>
+              High Risk: {{ total['total_cluster_by_cat']['highRisk'] }} <br>
+              Religious: {{ total['total_cluster_by_cat']['religious'] }} <br>
+              Detention Center: {{ total['total_cluster_by_cat']['detentionCentre'] }} <br>
+              Import: {{ total['total_cluster_by_cat']['import'] }} <br>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <!-- Chart -->
+          <div class="card">
+            <div class="card-body">
+              <canvas id="myChart" height="465px"></canvas>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">States</h1>
+          <div class="mr-2 text-muted">
+            <h5>Last Update: {{ lastupdate|datetimeformat('%d-%m-%Y') }}</h5>
+          </div>
+        </div>
+        <div class="text-center mt-2 mt-b">
+          {% for link, name in state_list%}
+            <a name="" id="" class="btn btn-primary mb-2" href="{{ url_for('cluster.cluster_state', cluster_state=link) }}" role="button">
+              {{ name }} <span class="badge badge-danger">{{ count_state_cluster(link) }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">New Cluster(s)</h1>
+    <div class="mr-2 text-muted">
+      <h5>Last Update: {{ lastupdate|datetimeformat('%d-%m-%Y') }}</h5>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Total New cluster(s)</h2>
+            <p class="card-text h3">{{ new_cluster['total_new_cluster'] }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        {% for cluster_index in new_cluster['cluster_list_data'] %}
+          <div class="card border-dark mb-3">
+            <div class="card-header">{{ cluster_index['cluster'] }}</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title">{{ cluster_index['state'] }} | {{ cluster_index['district'] }}</h5>
+              <p class="card-text">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      Date Announced: <b>{{ cluster_index['date_announced']|datetimeformat('%d-%m-%Y') }}</b>  <br>
+                      Category: <a href="{{ url_for('cluster.cluster_category', cluster_category=cluster_index['category']) }}">
+                        {{ cluster_index['category'].capitalize() }}
+                      </a> <br>
+                    </div>
+                    <div class="col-md-6">
+                      New Cases: <b>{{ cluster_index['cases_new'] }}</b> <br>
+                      Total Cases: <b>{{ cluster_index['cases_total'] }}</b> <br>
+                    </div>
+                  </div>
+                </div>
+              </p>
+              <div class="float-right">
+                <a class="btn btn-primary" href="{{ url_for('cluster.cluster_detail', c_id=cluster_index['cluster_id']) }}" role="button">Detail</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}
+{% block jquery %}
+    <script>
+        const labels = [
+          {% for label in chart['cat_labels'] %}
+          "{{ label.capitalize() }}",
+          {% endfor %}
+        ];
+      
+        const data = {
+          labels: labels,
+          datasets: [{
+            data: [
+              {% for data in chart['cat_data'] %}
+                {{ data }},
+              {% endfor %}
+            ],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(255, 159, 64)',
+              'rgb(255, 205, 86)',
+              'rgb(75, 192, 192)',
+              'rgb(54, 162, 235)',
+              'rgb(153, 102, 255)',
+              'rgb(201, 203, 207)'
+            ],
+            hoverOffset: 4
+          }]
+        };
+        
+        const config = {
+          type: "{{ chart['chart_config'] }}",
+          data: data,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+            title: {
+                display: true,
+                text: "{{ chart['chart_title'] }}"
+              }
+            }
+          }
+        };
+        
+        var myChart = new Chart(document.getElementById('myChart'), config);
+    </script>
+{% endblock %}

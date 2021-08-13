@@ -1,0 +1,98 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- single data output -->
+
+<h4>{{ cluster_data['cluster'] }}</h4> 
+<p class="text-muted">
+    {{ cluster_data['state'] }} | {{ cluster_data['district'] }}
+</p>
+<br>
+<div class="col-12">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+           
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Date of declaration as cluster</h4>
+                    <p class="card-text box-font">{{ cluster_data['date_announced']|datetimeformat('%d-%m-%Y') }}</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Category</h4>
+                    <p class="card-text box-font"><a href="{{ url_for('cluster.cluster_category', cluster_category=cluster_data['category'])}}">{{ cluster_data['category'].capitalize() }}</a></p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Status</h4>
+                    <p class="card-text box-font">{{ cluster_data['status'].capitalize() }}</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Recoverd</h4>
+                    <p class="card-text box-font">{{ cluster_data['recovered'] }}</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Death(s)</h4>
+                    <p class="card-text box-font">{{ cluster_data['deaths'] }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-12 col-md-4">
+            <div class="card mb-2">
+                <div class="card-body ">
+                    <h4 class="card-title">New Case(s)</h4>
+                    <p class="card-text box-font">{{ cluster_data['cases_new'] }}</p>
+                    <p class="text-muted">* Number of new cases detected within cluster in the 24h since the last report.</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Active Case(s)</h4>
+                    <p class="card-text box-font">{{ cluster_data['cases_active'] }}</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Total Case(s)</h4>
+                    <p class="card-text box-font">{{ cluster_data['cases_total'] }}</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Test(s)</h4>
+                    <p class="card-text box-font">{{ cluster_data['tests'] }}</p>
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">ICU</h4>
+                    <p class="card-text box-font">{{ cluster_data['icu'] }}</p>
+                </div>
+            </div>
+            <!-- <div class="float-right btn-group">
+                <a class="btn btn-primary" href="{{ url_for('cluster.index') }}" role="button">Back to Dashboard</a>
+                <a class="btn btn-primary" href="{{ url_for('cluster.cluster_category', cluster_category=cluster_data['category']) }}" role="button">Go to {{ cluster_data['category'].capitalize() }}</a>
+            </div> -->
+        </div>
+    </div>
+    
+</div>
+
+<!-- <p><div class="text-muted"></div> New Cases: {new_cases} </p>
+<p>Total Cases: {total_cases}</p>
+<p>Active Cases: {active_cases}</p>
+
+<p>Test</p>
+<p>ICU</p>
+<p>Death</p>
+<p>Recoverd</p> -->
+
+{% endblock %}

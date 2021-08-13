@@ -1,0 +1,2 @@
+SECRET_KEY = '{edit_this_value}'
+FLASK_ENV = 'development'

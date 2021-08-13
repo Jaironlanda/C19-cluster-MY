@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% set active_page = "cluster_all" %}
+{% block content %}
+<div class="table-responsive">
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Date Announced</th>
+        <th>Cluster</th>
+        <th>State</th>
+        <th>District</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+  
+{% endblock %}
+
+{% block jquery %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        responsive: true,
+        ajax: '/cluster/api',
+        columns:[
+          {data: 'date_announced'},
+          {
+            data: 'cluster',
+            render: function (data, type, row) {
+              return '<a href="/cluster/'+ row.cluster_id +'">'+ data +'</a>';
+            }
+          },
+          {data: 'state'},
+          {data: 'district'},
+          {data: 'category'},
+          {data: 'status'},
+          {
+            data: 'cluster_id',
+            render: function (data) {
+              return '<a class="btn btn-primary" href="/cluster/'+ data +'" >Detail</a>';
+            }
+          },
+        ]
+      });
+    });
+  </script>
+{% endblock %}

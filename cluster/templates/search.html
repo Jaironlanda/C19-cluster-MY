@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h5>Search Result: {{ len_result }}</h5>
+<hr>
+{% if len_result == 0 %}
+    <p class="text-center">Search result for ' {{ search_input }} ', not found &#128533;</p>
+{% endif %}
+
+{% for data in result %}
+    <p><a href="{{ url_for('cluster.cluster_detail', c_id=data['cluster_id']) }}">{{ data['cluster'] }}</a></p>
+    <hr>
+{% endfor %}
+
+{% endblock %}

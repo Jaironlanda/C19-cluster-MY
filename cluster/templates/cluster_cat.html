@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h3>Total Cluster: {{ len_cluster_cat }}</h3><br>
+
+
+{% for index_cat in cluster_list_cat %}
+    <p>Name: <a href="{{ url_for('cluster.cluster_detail', c_id=index_cat['cluster_id'])}}">{{index_cat['cluster']}}</a> 
+        | State: <a href="{{ url_for('cluster.cluster_state', cluster_state=index_cat['state'])}}">{{ index_cat['state'] }} </a> 
+        | Status: {{ index_cat['status'].capitalize() }}
+    </p>
+    <hr>
+{% endfor %}
+{% endblock %}
