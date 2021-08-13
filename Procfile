@@ -1,1 +1,1 @@
-web: gunicorn wsgi:cluster
+web gunicorn wsgi:cluster
