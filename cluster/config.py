@@ -9,9 +9,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     SECRET_KEY = os.getenv('SECRET_KEY')
-
-    C19_DATASET_CLUSTER = ""
-    MY_STATE_LIST = ""
+    WTF_CSRF_SECRET_KEY = os.getenv('WTF_CSRF_SECRET_KEY')
 
     SESSION_COOKIE_SECURE = True
 
