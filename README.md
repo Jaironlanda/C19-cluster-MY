@@ -4,6 +4,8 @@ This project is developed for educational purposes only. The COVID-19 data is pr
 
 If you found an error, please do not hesitate to contact me through email: `jaironlanda[at]gmail[dot]com`
 
+![C19-Cluster Dashboard](screenshot/screenshot_dashboard.png)
+
 ## Project Screenshot
 
 
