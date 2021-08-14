@@ -4,10 +4,8 @@ This project is developed for educational purposes only. The COVID-19 data is pr
 
 If you found an error, please do not hesitate to contact me through email: `jaironlanda[at]gmail[dot]com`
 
-![C19-Cluster Dashboard](https://github.com/Jaironlanda/C19-cluster-MY/blob/main/screenshot/Screenshot_dashboard.png)
-
 ## Project Screenshot
-
+![C19-Cluster Dashboard](https://github.com/Jaironlanda/C19-cluster-MY/blob/main/screenshot/Screenshot_dashboard.png)
 
 ## Dataset
 - Cluster Dataset ([Link](https://github.com/MoH-Malaysia/covid19-public/tree/main/epidemic#cluster-analysis))
