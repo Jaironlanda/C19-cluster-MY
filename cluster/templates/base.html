@@ -85,7 +85,6 @@
 {% block scripts %}
   <!-- Optional JavaScript -->
   {{ bootstrap.load_js() }}
-  {{ render_static('js', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js', local=False)}}
   {{ render_static('js', 'https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js', local=False)}}
   {{ render_static('js', 'https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js', local=False)}}
   {% block jquery %}{% endblock %}
