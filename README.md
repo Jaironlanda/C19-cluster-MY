@@ -22,4 +22,9 @@ If you found an error, please do not hesitate to contact me through email: `jair
 - Jinja2
 
 ## License
+
+The data shared in this repository may be used per the terms of reference found in Appendix B of the Pekeliling Pelaksanaan Data Terbuka Bil.1/2015, accessible here:
+
+[Data.gov.my]https://www.data.gov.my/p/pekeliling-data-terbuka
+
 [MIT](https://choosealicense.com/licenses/mit/)
